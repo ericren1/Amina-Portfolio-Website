@@ -38,14 +38,16 @@ if (page === 'index') {
       </figcaption>
     </figure>
 
-    ${photoIndex === 0 && story.intro ? `
-      <div class="project-writeup">
-        ${story.intro
+    
+${photoIndex === 0 && story.slug === 'a-sailing-soul' ? `
+  <div class="project-writeup">
+    ${story.intro
+          .trim()
           .split(/\n\s*\n/)
           .map(paragraph => `<p>${esc(paragraph)}</p>`)
           .join('')}
-      </div>
-    ` : ''}
+  </div>
+` : ''}
 
   </div>
 `).join('');
