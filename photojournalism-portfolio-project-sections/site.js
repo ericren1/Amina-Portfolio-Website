@@ -21,6 +21,7 @@ if (page === 'index') {
   document.getElementById('photo-count').textContent = `${d.stories.length} projects · ${total} photographs`;
   document.getElementById('portfolio-projects').innerHTML = d.stories.map((story, projectIndex) => {
     const photoCount = story.photos.length;
+    const galleryLayout = photoCount === 1 ? 'single' : photoCount === 2 ? 'pair' : photoCount === 3 ? 'trio' : 'collection';
 
     const images = story.photos.map((photo, photoIndex) => `
   <div class="project-photo-column">
@@ -34,20 +35,9 @@ if (page === 'index') {
 
       <figcaption>
         <span>${String(photoIndex + 1).padStart(2, '0')} / ${String(photoCount).padStart(2, '0')}</span>
-        <span>${esc(photo.caption)}</span>
+        ${photo.caption ? `<span>${esc(photo.caption)}</span>` : ''}
       </figcaption>
     </figure>
-
-    
-${photoIndex === 0 && story.slug === 'a-sailing-soul' ? `
-  <div class="project-writeup">
-    ${story.intro
-          .trim()
-          .split(/\n\s*\n/)
-          .map(paragraph => `<p>${esc(paragraph)}</p>`)
-          .join('')}
-  </div>
-` : ''}
 
   </div>
 `).join('');
@@ -57,14 +47,23 @@ ${photoIndex === 0 && story.slug === 'a-sailing-soul' ? `
         <div class="project-copy">
           <p class="eyebrow">${esc(story.category)}${story.year ? ' · ' + esc(story.year) : ''}</p>
           <h3 id="project-heading-${projectIndex}">${esc(story.title)}</h3>
-          <p class="project-dek">${esc(story.dek)}</p>
         </div>
-        <span class="project-photo-count">${photoCount} photographs</span>
+        ${photoCount ? `<span class="project-photo-count">${photoCount} photographs</span>` : ''}
       </div>
-      <div class="project-gallery">${images}</div>
+      ${story.intro ? `<div class="project-writeup">${story.intro
+        .trim()
+        .split(/\n\s*\n/)
+        .map(paragraph => {
+          const text = story.collaborator
+            ? paragraph.split(story.collaborator.name).map(esc).join(`<a href="${esc(story.collaborator.url)}" target="_blank" rel="noopener noreferrer">${esc(story.collaborator.name)}</a>`)
+            : esc(paragraph);
+          return `<p>${text}</p>`;
+        })
+        .join('')}</div>` : ''}
+      ${photoCount ? `<div class="project-gallery project-gallery--${galleryLayout}">${images}</div>` : ''}
     </section>`;
   }).join('');
 }
 if (page === 'writing') {
-  document.getElementById('article-list').innerHTML = d.writing.map(a => `<article class="article-row"><div class="article-date">${esc(a.date)}</div><div><p class="eyebrow">${esc(a.type)}</p><h2>${a.url ? `<a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a>` : esc(a.title)}</h2><p>${esc(a.summary)}</p>${a.url ? '' : '<p class="sample-writing">Sample entry — no publication link yet</p>'}</div><span class="article-arrow" aria-hidden="true">${a.url ? '↗' : '—'}</span></article>`).join('');
+  document.getElementById('article-list').innerHTML = d.writing.map(a => `<article class="article-row"><div class="article-date">${esc(a.date)}</div><div><p class="eyebrow">${esc(a.type)}</p><h2>${a.url ? `<a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a>` : esc(a.title)}</h2><p>${esc(a.summary)}</p></div><span class="article-arrow" aria-hidden="true">${a.url ? '↗' : '—'}</span></article>`).join('');
 }

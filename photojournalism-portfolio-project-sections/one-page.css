@@ -113,28 +113,35 @@
   margin: 0 0 20px;
 }
 
+/* Editorial layouts adapt to each project's photo count without cropping images. */
+.portfolio-projects {gap:clamp(76px,9vw,120px);}
+.project-heading {padding-top:30px;margin-bottom:25px;}
+.project-number {display:flex;align-items:center;gap:10px;padding-top:4px;}
+.project-number::before {content:"";width:18px;height:1px;background:var(--accent);}
+.project-copy h3 {font-size:clamp(38px,5vw,66px);letter-spacing:-.065em;}
+.project-writeup {max-width:720px;margin:0 0 38px 129px;}
+.project-writeup p {font-size:15px;line-height:1.85;color:#454a46;}
+.project-writeup p:last-child {margin-bottom:0;}
+.project-gallery {max-width:1120px;margin:0 auto;gap:34px 24px;}
+.project-photo img {border-radius:3px;background:#eeede8;}
+.project-photo figcaption {justify-content:flex-start;align-items:baseline;gap:14px;margin-top:12px;}
+.project-photo figcaption span:first-child {font-size:9px;letter-spacing:.08em;color:var(--accent);}
+.project-photo figcaption span:last-child {max-width:none;text-align:left;}
+.project-gallery--single {grid-template-columns:1fr;max-width:820px;}
+.project-gallery--pair {grid-template-columns:repeat(2,minmax(0,1fr));max-width:1040px;}
+.project-gallery--trio {grid-template-columns:repeat(2,minmax(0,1fr));max-width:1040px;}
+.project-gallery--trio > .project-photo-column:first-child {grid-column:1/-1;width:min(100%,920px);justify-self:center;}
+#the-layers-we-choose .project-gallery--trio > .project-photo-column:first-child,
+#vlns .project-gallery--trio > .project-photo-column:first-child,
+#dway-programs .project-gallery--trio > .project-photo-column:first-child {width:min(100%,760px);}
+.project-gallery--collection {grid-template-columns:repeat(2,minmax(0,1fr));}
+
 @media (max-width: 700px) {
-  .project-writeup {
-    margin-top: 24px;
-  }
-}
-
-
-/* A Sailing Soul write-up */
-
-.project-photo-column {
-  min-width: 0;
-}
-
-.project-writeup {
-  display: block;
-  margin-top: 32px;
-  max-width: 100%;
-}
-
-.project-writeup p {
-  font-size: 14px;
-  line-height: 1.85;
-  color: var(--ink);
-  margin: 0 0 20px;
+  .portfolio-projects {gap:68px;}
+  .project-heading {padding-top:22px;}
+  .project-writeup {margin:0 0 26px;}
+  .project-writeup p {font-size:14px;}
+  .project-gallery,.project-gallery--pair,.project-gallery--trio,.project-gallery--collection {grid-template-columns:1fr;gap:26px;}
+  .project-gallery--single {grid-template-columns:minmax(0,1fr);}
+  .project-gallery--trio > .project-photo-column:first-child {grid-column:auto;width:100%;}
 }
