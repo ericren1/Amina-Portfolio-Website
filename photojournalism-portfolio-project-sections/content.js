@@ -1,7 +1,7 @@
 window.PORTFOLIO = {
   name: 'AMINA DAOUD',
   shortName: 'AMINA DAOUD',
-  email: 'hello@example.com',
+  email: 'amina.e.daoud@gmail.com',
   instagram: 'https://www.instagram.com/amnqa3/',
   location: 'Based in Toronto.',
   introduction: "I’m a Toronto-based photographer and journalism student at Toronto Metropolitan University, with a focus on photojournalism. I’ve had the chance to work on a range of projects, from live events and artist shoots, portraits and clothing brand campaigns. I like being able to move between different environments and adjust my style depending on the person, story, or idea I’m working with.",
