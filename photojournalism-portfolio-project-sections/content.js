@@ -237,14 +237,5 @@ Looking back, this project was especially significant because it gave me the opp
         }
       ]
     }
-  ],
-  writing: [
-    {
-      date: '2024',
-      type: 'Article · Community',
-      title: 'Spreading Hope and Nourishment: Smile for Sache’s Ramadan Mission',
-      summary: 'A first-year journalism article documenting Smile for Sache’s Ramadan initiative and the volunteers preparing meals for the community.',
-      url: ''
-    }
   ]
 };

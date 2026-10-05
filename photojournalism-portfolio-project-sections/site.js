@@ -5,7 +5,7 @@ const page = document.body.dataset.page;
 const email = /^\S+@\S+\.\S+$/.test(d.email) ? d.email : '';
 const emailLink = email ? `<a href="mailto:${esc(email)}">Email ↗</a>` : '';
 const instagramLink = d.instagram && d.instagram !== 'https://instagram.com/' ? `<a href="${esc(d.instagram)}" target="_blank" rel="noopener noreferrer">Instagram ↗</a>` : '';
-const nav = `<a href="index.html#work">Photos</a><a href="writing.html" ${page === 'writing' ? 'aria-current="page"' : ''}>Writing</a><a href="index.html#about">About</a>${emailLink}${instagramLink}`;
+const nav = `<a href="index.html#work">Photos</a><a href="index.html#about">About</a>${emailLink}${instagramLink}`;
 document.getElementById('header').innerHTML = `<header class="site-header"><div class="container header-inner"><a class="brand" href="index.html" aria-label="Home">${esc(d.shortName)} <span>/ PHOTOGRAPHY</span></a><nav class="nav" aria-label="Main navigation">${nav}</nav><button type="button" class="menu-toggle" aria-controls="mobile-nav" aria-expanded="false">MENU ☰</button></div><nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">${nav}</nav></header>`;
 document.getElementById('footer').innerHTML = `<footer class="footer"><div class="container footer-inner"><div><a class="brand" href="index.html">${esc(d.shortName)} <span>/ PHOTOGRAPHY</span></a><div class="footer-note">© ${new Date().getFullYear()} ${esc(d.name)} · Photography & reporting</div></div><div class="footer-links">${emailLink}${instagramLink}<a href="index.html#top">Back to top ↑</a></div></div></footer>`;
 const toggle = document.querySelector('.menu-toggle');
@@ -63,7 +63,4 @@ if (page === 'index') {
       ${photoCount ? `<div class="project-gallery project-gallery--${galleryLayout}">${images}</div>` : ''}
     </section>`;
   }).join('');
-}
-if (page === 'writing') {
-  document.getElementById('article-list').innerHTML = d.writing.map(a => `<article class="article-row"><div class="article-date">${esc(a.date)}</div><div><p class="eyebrow">${esc(a.type)}</p><h2>${a.url ? `<a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a>` : esc(a.title)}</h2><p>${esc(a.summary)}</p></div><span class="article-arrow" aria-hidden="true">${a.url ? '↗' : '—'}</span></article>`).join('');
 }
