@@ -24,7 +24,6 @@ if (page === 'index') {
       <a class="project-card-link" href="project.html?project=${encodeURIComponent(story.slug)}" aria-label="View ${esc(story.title)} project">
         <div class="project-card-cover">
           <img src="${esc(story.cover)}" alt="${esc(story.title)}" ${projectIndex === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
-          <span class="project-card-arrow" aria-hidden="true">↗</span>
         </div>
         <div class="project-card-copy">
           <p class="eyebrow">${esc(story.category)}${story.year ? ' · ' + esc(story.year) : ''}</p>
@@ -57,41 +56,31 @@ if (page === 'project') {
         : esc(paragraph);
       return `<p>${text}</p>`;
     }).join('') : '';
-    const leadPhoto = story.photos[0];
-    const photos = story.photos.slice(1).map((photo, photoIndex) => `
-      <div class="project-photo-column">
-        <figure class="project-photo">
-          <img src="${esc(photo.src)}" alt="${esc(photo.alt || story.title)}" loading="lazy">
-          <figcaption>
-            <span>${String(photoIndex + 2).padStart(2, '0')} / ${String(photoCount).padStart(2, '0')}</span>
-            ${photo.caption ? `<span>${esc(photo.caption)}</span>` : ''}
-          </figcaption>
-        </figure>
-      </div>`).join('');
-    const remainingCount = story.photos.length - 1;
-    const remainingLayout = remainingCount === 1 ? 'single' : remainingCount === 2 ? 'pair' : remainingCount === 3 ? 'trio' : 'collection';
+    const introTile = `
+      <header class="project-mosaic-intro">
+        <p class="eyebrow">${esc(story.category)}${story.year ? ' · ' + esc(story.year) : ''}</p>
+        <h1>${esc(story.title)}</h1>
+        <p class="project-detail-meta">${esc(story.location)} · ${photoCount} ${photoCount === 1 ? 'photograph' : 'photographs'}</p>
+        ${intro ? `<div class="project-detail-writeup">${intro}</div>` : ''}
+      </header>`;
+    const photos = story.photos.map((photo, photoIndex) => `
+        <div class="project-photo-column">
+          <figure class="project-photo">
+            <img src="${esc(photo.src)}" alt="${esc(photo.alt || story.title)}" loading="${photoIndex === 0 ? 'eager' : 'lazy'}">
+            <figcaption>
+              <span>${String(photoIndex + 1).padStart(2, '0')} / ${String(photoCount).padStart(2, '0')}</span>
+              ${photo.caption ? `<span>${esc(photo.caption)}</span>` : ''}
+            </figcaption>
+          </figure>
+        </div>`).join('');
 
     detail.innerHTML = `
       <div class="container">
         <a class="project-back-link" href="index.html#work">← All projects</a>
-        <section class="project-detail-hero">
-          <div class="project-detail-copy">
-            <header class="project-detail-heading">
-              <p class="eyebrow">${esc(story.category)}${story.year ? ' · ' + esc(story.year) : ''}</p>
-              <h1>${esc(story.title)}</h1>
-              <p class="project-detail-meta">${esc(story.location)} · ${photoCount} ${photoCount === 1 ? 'photograph' : 'photographs'}</p>
-            </header>
-            ${intro ? `<div class="project-writeup project-detail-writeup">${intro}</div>` : ''}
-          </div>
-          ${leadPhoto ? `<figure class="project-detail-cover project-photo">
-            <img src="${esc(leadPhoto.src)}" alt="${esc(leadPhoto.alt || story.title)}" fetchpriority="high">
-            <figcaption>
-              <span>01 / ${String(photoCount).padStart(2, '0')}</span>
-              ${leadPhoto.caption ? `<span>${esc(leadPhoto.caption)}</span>` : ''}
-            </figcaption>
-          </figure>` : ''}
+        <section class="project-mosaic" aria-label="${esc(story.title)} project">
+          ${introTile}
+          ${photos}
         </section>
-        ${photos ? `<div class="project-gallery project-gallery--${remainingLayout}">${photos}</div>` : ''}
         <a class="project-back-link project-back-link--bottom" href="index.html#work">← Back to all projects</a>
       </div>`;
   }
